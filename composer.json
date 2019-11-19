@@ -16,5 +16,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^7.4"
+    },
+    "autoload": {
+        "psr-4" :{"Hanhan1978\\FFISamples\\" : "src/"}
     }
 }

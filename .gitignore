@@ -1,3 +1,4 @@
 .php-version
 *.swp
 vendor/
+*.so

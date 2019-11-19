@@ -27,29 +27,35 @@ int * argIntArray(int * arr, int size){
 }
 
 
-void argStringArray(char ** arr, int size){
+char ** argStringArray(char ** arr, int size){
 
-    printf("Argument is string array[%d]\n", size);
+    char **retArr;
+    retArr = malloc(size * sizeof(char *));
     for(int i=0; i<size; i++){
-        printf("  arr[%d] => %s\n", i, arr[i]);
+        retArr[i] = malloc(strlen(arr[i]));
+        strcpy(retArr[i], arr[i]);
     }
+    return retArr;
 }
 
 typedef int (*callback_i)(int);
-void argCallback(callback_i callback)
+int argCallback(callback_i callback, int num)
 {
-    printf("Argument is int-int callback, 2*2 result => %d\n", callback(2));
+    return callback(num);
+}
+
+typedef double (*callback_d)(double);
+double argCallbackDouble(callback_d callback, double num)
+{
+    return callback(num);
 }
 
 
 struct animal {
     int age;
-    const char *type;
+    const char *name;
 };
 
-void argStruct(struct animal *a){
-    printf("Argument is struct animal\n");
-    printf("  age => %d\n", a->age);
-    printf("  type => %s\n", a->type);
-
+struct animal * argStruct(struct animal *a){
+    return a;
 }

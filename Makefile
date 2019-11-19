@@ -11,5 +11,6 @@ debug: CFLAGS = -g
 debug: all
 
 
+.PHONY: clean
 clean:
-	$(RM) src/lib/sample.so
+	$(RM) src/lib/*.so
