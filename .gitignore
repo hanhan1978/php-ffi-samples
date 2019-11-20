@@ -1,4 +1,5 @@
 .php-version
 *.swp
 vendor/
-*.so
+src/lib/*.so
+src/lib/*.h
