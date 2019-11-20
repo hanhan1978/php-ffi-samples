@@ -70,10 +70,10 @@ struct animal * argStruct(struct animal *a);
         $slice->len = count($nums);
         $slice->data = \FFI::addr($intArr[0]);
         $ret = $ffi->argIntArray($slice);
-        $retArr = \FFI::cast('int *', $ret);
+        $retArr = \FFI::cast('long *', $ret);
         $r=[];
         for($i=0; $i<count($nums); $i++){
-            array_push($r, $retArr[$i*2]);
+            array_push($r, $retArr[$i]);
         }
         return $r;
     }
