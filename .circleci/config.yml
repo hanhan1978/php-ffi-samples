@@ -1,0 +1,23 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/repo
+    docker:
+      - image: hanhan1978/php-7.4-with-ffi
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - composer_cache
+      - run: make 
+      - run: composer install
+      - run: ./vendor/bin/phpunit
+      - save_cache:
+          paths:
+            - "~/.composer/cache"
+          key: composer_cache
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - build
