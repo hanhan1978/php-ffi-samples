@@ -10,6 +10,9 @@ jobs:
       - restore_cache:
           keys:
             - composer_cache
+      - run: apt update
+      - run: apt install -y libzip-dev
+      - run: docker-php-ext-install zip
       - run: php -r "file_put_contents('/usr/local/bin/composer', file_get_contents('https://getcomposer.org/download/1.9.1/composer.phar'));"
       - run: chmod +x /usr/local/bin/composer
       - run: composer install
