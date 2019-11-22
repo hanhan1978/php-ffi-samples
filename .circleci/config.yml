@@ -5,19 +5,38 @@ jobs:
     docker:
       - image: hanhan1978/php-7.4-with-ffi
     steps:
-      - checkout
+      - attach_workspace:
+          at: .
       - restore_cache:
           keys:
             - composer_cache
-      - run: make 
+      - run: apt update
+      - run: apt install -y libzip-dev
+      - run: docker-php-ext-install zip
+      - run: php -r "file_put_contents('/usr/local/bin/composer', file_get_contents('https://getcomposer.org/download/1.9.1/composer.phar'));"
+      - run: chmod +x /usr/local/bin/composer
       - run: composer install
       - run: ./vendor/bin/phpunit
       - save_cache:
           paths:
             - "~/.composer/cache"
           key: composer_cache
+  make:
+    working_directory: ~/repo
+    docker:
+      - image: circleci/golang:1.13-buster-node-browsers-legacy
+    steps:
+      - checkout
+      - run: make
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
 workflows:
   version: 2
   build_and_deploy:
     jobs:
-      - build
+      - make
+      - build:
+          requires:
+            - make
