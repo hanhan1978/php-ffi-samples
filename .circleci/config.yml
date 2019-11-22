@@ -10,7 +10,6 @@ jobs:
       - restore_cache:
           keys:
             - composer_cache
-      - run: make 
       - run: composer install
       - run: ./vendor/bin/phpunit
       - save_cache:
